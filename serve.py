@@ -51,7 +51,7 @@ def handle_query():
     response = rag.generate_content(combined_information)
 
     return jsonify({
-        'content': response.text,
+        'replyContent': response.text,
         'role': 'system'
     })
 
