@@ -5,4 +5,3 @@ google-generativeai==0.6.0
 IPython
 flask-cors
 mysql-connector-python
-PyMySQL
