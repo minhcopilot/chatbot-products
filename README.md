@@ -57,7 +57,7 @@ python serve.py
 ```
 
 #### 6. Testing API
-http://localhost:5002/api/search
+http://localhost:5000/api/search
 POST
 {
     "content":"Kệ gầm bếp Tokyo "
