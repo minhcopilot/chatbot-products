@@ -4,7 +4,6 @@ import google.generativeai as genai
 from sentence_transformers import SentenceTransformer
 from IPython.display import Markdown
 import textwrap
-
 class RAG():
     def __init__(self, 
             mysqlHost: str,
@@ -49,7 +48,11 @@ class RAG():
             return "Invalid query or embedding generation failed."
 
         # Retrieve all embeddings from the database
-        query = f"SELECT Id, Name, Price, Discount, Description FROM Products"
+        query = f"""
+            SELECT p.Id, p.Name, p.Price, p.Discount, p.Description, p.Stock, s.Name AS SupplierName 
+            FROM Products p 
+            LEFT JOIN Suppliers s ON p.SupplierId = s.Id
+        """
         cursor = self.conn.cursor(dictionary=True)
         cursor.execute(query)
         results = cursor.fetchall()
@@ -79,6 +82,10 @@ class RAG():
                 
                 if result.get('Discount'):
                     enhanced_prompt += f", Ưu đãi: {result.get('Discount')}%"
+                if result.get('Stock'):
+                    enhanced_prompt += f", Số lượng: {result.get('Stock')}"
+                if result.get('SupplierName'):
+                    enhanced_prompt += f", Nhà cung cấp: {result.get('SupplierName')}"
         return enhanced_prompt
 
     def generate_content(self, prompt):
@@ -87,4 +94,3 @@ class RAG():
     def _to_markdown(text):
         text = text.replace('•', '  *')
         return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
-
