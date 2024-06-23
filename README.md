@@ -40,11 +40,8 @@ The full prompt will look like this:
 
 ```
 
-Hãy trở thành chuyên gia tư vấn bán hàng cho một cửa hàng điện thoại. Câu hỏi của khách hàng: Samsung Galaxy Z Fold4 512GB
-Trả lời câu hỏi dựa vào các thông tin sản phẩm dưới đây:
-...
 
-```
+
 
 The prompt is then fed to LLMs.
 
