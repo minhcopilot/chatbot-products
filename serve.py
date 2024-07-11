@@ -44,10 +44,10 @@ def handle_query():
     if not query:
         return jsonify({'error': 'No query provided'}), 400
 
-    # Retrieve data from MySQL database using RAG
+    # Sử dụng phương thức enhance_prompt của RAG để lấy thông tin từ cơ sở dữ liệu.
     source_information = rag.enhance_prompt(query).replace('<br>', '\n')
     combined_information = f"Hãy trở thành chuyên gia tư vấn bán hàng cho một cửa hàng bán đồ gia dụng. Câu hỏi của khách hàng: {query}\nTrả lời câu hỏi dựa vào các thông tin sản phẩm dưới đây: {source_information}."
-
+    # Sử dụng mô hình LLM để tạo câu trả lời.
     response = rag.generate_content(combined_information)
 
     return jsonify({

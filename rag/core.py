@@ -29,17 +29,17 @@ class RAG():
         # config llm
         genai.configure(api_key=llmApiKey)
         self.llm = genai.GenerativeModel(llmName)
-
+# Tạo embedding cho văn bản đầu vào sử dụng mô hình SentenceTransformer.
     def get_embedding(self, text):
         if not text.strip():
             return []
 
         embedding = self.embedding_model.encode(text)
         return embedding.tolist()
-
+# Tính toán độ tương đồng cosine giữa hai vector.
     def cosine_similarity(self, a, b):
         return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-
+# Tìm kiếm sản phẩm từ cơ sở dữ liệu MySQL dựa trên embedding của truy vấn người dùng. Sắp xếp các sản phẩm theo độ tương đồng với truy vấn.
     def vector_search(self, user_query, limit=4):
         # Generate embedding for the user query
         query_embedding = self.get_embedding(user_query)
@@ -65,7 +65,7 @@ class RAG():
             result['score'] = self.cosine_similarity(query_embedding, product_embedding)
         results = sorted(results, key=lambda x: x['score'], reverse=True)
         return results[:limit]
-
+#  Tạo một prompt nâng cao từ kết quả tìm kiếm để đưa vào mô hình LLM.
     def enhance_prompt(self, query):
         get_knowledge = self.vector_search(query, 10)
         enhanced_prompt = ""
@@ -87,7 +87,7 @@ class RAG():
                 if result.get('SupplierName'):
                     enhanced_prompt += f", Nhà cung cấp: {result.get('SupplierName')}"
         return enhanced_prompt
-
+# Sử dụng mô hình LLM để tạo câu trả lời từ prompt nâng cao.
     def generate_content(self, prompt):
         return self.llm.generate_content(prompt)
 
