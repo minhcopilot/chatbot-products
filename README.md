@@ -4,6 +4,8 @@
 
 This code requires Python >= 3.9.
 
+myenv\Scripts\activate
+
 ```
 pip install -r requirements.txt
 ```
@@ -40,9 +42,6 @@ The full prompt will look like this:
 
 ```
 
-
-
-
 The prompt is then fed to LLMs.
 
 #### 5. Run server
@@ -54,9 +53,13 @@ python serve.py
 ```
 
 #### 6. Testing API
+
 http://localhost:5000/api/search
 POST
 {
-    "content":"Kệ gầm bếp Tokyo "
+"content":"Kệ gầm bếp Tokyo "
 }
+
+```
+
 ```
